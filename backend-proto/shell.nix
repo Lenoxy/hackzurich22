@@ -2,7 +2,7 @@
 
 let
   myPython = pkgs.python3.withPackages (p: with p; [
-    fastapi
+    flask
   ]);
 in
   myPython.env
