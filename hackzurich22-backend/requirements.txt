@@ -1,2 +1,2 @@
-pusher>=3.2.0
 flask>=2.2.2
+websockets>=10.3
