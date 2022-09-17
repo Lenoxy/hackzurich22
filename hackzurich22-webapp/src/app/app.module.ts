@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { DestinationPickerComponent } from './components/destination-picker/destination-picker.component';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { WsService } from './services/ws.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, WsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

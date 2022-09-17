@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Patient } from 'src/app/models/patient.model';
+import { ApiService } from 'src/app/services/api.service';
+import { WsService } from 'src/app/services/ws.service';
 
 @Component({
   selector: 'app-destination-picker',
@@ -8,7 +10,7 @@ import { Patient } from 'src/app/models/patient.model';
 })
 export class DestinationPickerComponent implements OnInit {
 
-  constructor() {
+  constructor(private apiService: ApiService, private wsService: WsService) {
   }
 
   public errors: string[] = [];
@@ -25,7 +27,9 @@ export class DestinationPickerComponent implements OnInit {
       if (!this.patients.some(patient => patient.name.toLowerCase() === this.name.toLowerCase())) {
         this.errors.push('The requested person could not be found.')
       } else {
-
+        this.apiService.callElevator(this.patients.find(patient => patient.name.toLowerCase() === this.name.toLowerCase()) as Patient).then(res => {
+          console.log(res);
+        })
       }
     }
   }
