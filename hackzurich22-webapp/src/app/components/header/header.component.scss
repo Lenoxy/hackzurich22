@@ -1,0 +1,7 @@
+.header {
+  @apply p-6 bg-white flex justify-around h-20 shadow-slate-400 shadow-xl;
+
+  .title {
+    @apply font-medium text-black text-xl;
+  }
+}
