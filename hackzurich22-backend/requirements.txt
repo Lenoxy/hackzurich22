@@ -5,3 +5,4 @@ websockets-routes>=0.2
 snowflake-id
 flask-sock
 flask-cors
+httpx
