@@ -12,24 +12,24 @@ import httpx
 
 BASE_URL = "https://hack.myport.guide"
 
-# POST to start a lift movement
-JSON_DATA = {
-    "asyncId": "mytoken",
-    "target": {
-        "floor": 0,
-        "zone": "Lobby",
-    },
-    "options": {
-        "destination": {
-            "destinationFloor": 10,
-            "destinationZone": "Penthouse",
+def move_lift_from_to(pickupFloor, destinationFloor):
+    # POST to start a lift movement
+    JSON_DATA = {
+        "asyncId": "mytoken",
+        "target": {
+            "floor": pickupFloor
+        },
+        "options": {
+            "destination": {
+                "destinationFloor": destinationFloor
+            }
         }
     }
-}
 
-resp = httpx.post(f'{BASE_URL}/publish/', json=JSON_DATA)
-async_id = resp.json()['asyncId']
+    resp = httpx.post(f'{BASE_URL}/publish/', json=JSON_DATA)
+    return resp.json()['asyncId']
 
+async_id = move_lift_from_to(8,3)
 print(async_id)
 print('********')
 

@@ -16,4 +16,4 @@ class Ride:
     patient_name: str
 
 
-rides: list[Ride] = []
+rides = []
