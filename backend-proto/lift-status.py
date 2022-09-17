@@ -19,4 +19,14 @@ async def handler():
         async for message in websocket:
             print(message)
 
+            event = json.loads(message)
+            assert event['type'] == 'topic'
+            data = event['data']
+
+            # Interesting fields in the response:
+            #   data['floor']: int
+            #   data['movingState']: enum[string] (one of: stand-still | starting | moving | landing)
+            #   data['doorState']: enum[string] (one of: closing | closed | locking | locked | opening | opened)
+            #   data['target']: string (e.g. "1.1.2")
+
 asyncio.run(handler())
