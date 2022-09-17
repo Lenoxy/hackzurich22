@@ -4,7 +4,7 @@ class OrderElevator:
     to_floor: int
 
 
-async def order(ws, order: OrderElevator):
+def order(ws, order: OrderElevator):
     print("not implemented")
-    await ws.send("order elevator, not implemented")
+    ws.send("soon json(timestamp of elevator arrival, elevator name)")
 

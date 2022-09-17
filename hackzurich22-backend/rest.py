@@ -7,6 +7,8 @@ from snowflake import SnowflakeGenerator
 import in_memory_storage
 from flask import request
 
+import smartphone
+
 # Port 5000
 app = Flask(__name__)
 sock = Sock(app)
@@ -37,8 +39,7 @@ def new_session2():
     return "<p>Hello, World!</p>"
 
 
-@sock.route('/echo')
-def echo(ws):
+@sock.route('/smartphone')
+def smartphone_ws(ws):
     while True:
-        data = ws.receive()
-        ws.send(data)
+        smartphone.order(ws, json.loads(ws.receive()))
