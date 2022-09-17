@@ -25,7 +25,7 @@ export class TripComponent implements OnInit {
 
   travelDuration = '3 Minutes';
 
-  customerName = "David";
+  customerName = "Jacqueline";
 
   identityCode = "AC15"
 
