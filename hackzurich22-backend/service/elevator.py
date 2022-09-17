@@ -5,6 +5,6 @@ from ..in_memory_storage import Elevator, Ride, elevators
 
 def open_ws(ws, lift_name: str):
     # on
-    elevator = Elevator(lift_name, "idle", [])
+    elevator = Elevator(lift_name, "idle", 0, [])
     elevators.append(elevator)
     ws.send(json.dumps(elevator))
