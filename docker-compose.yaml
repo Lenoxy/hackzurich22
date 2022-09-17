@@ -1,0 +1,24 @@
+version: '3'
+services:
+  webapp:
+    container_name: hack-webapp
+    build: hackzurich22-webapp
+    ports:
+      - 80:80
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+  elevator-app:
+    container_name: hack-elevator-screen
+    build: hackzurich22-elevator-screen
+    ports:
+      - 81:80
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+  backend:
+    build: hackzurich22-backend
+    ports:
+      - "3000:5000"
+volumes:
+  webapp:
