@@ -1,0 +1,48 @@
+.content {
+  @apply h-screen bg-gray-100;
+
+  .header {
+    @apply p-6 bg-white flex justify-around h-20 shadow-slate-400 shadow-xl;
+
+    .title {
+      @apply font-medium text-black text-xl;
+    }
+  }
+
+  .info {
+    @apply p-12;
+
+    .welcome {
+      @apply text-2xl font-medium mb-6;
+    }
+
+    .choice-info {
+      @apply text-xl p-0;
+    }
+  }
+
+  .card {
+    @apply ml-8 mr-8 p-6 shadow-gray-600 shadow-2xl rounded-lg bg-gray-100;
+
+    .input {
+      @apply w-full h-12 border border-slate-300 rounded-lg p-2;
+    }
+
+    .button-wrapper {
+      @apply flex justify-around;
+
+      .continue {
+        @apply bg-cyan-600 pl-4 pr-4 pt-2 pb-2 mt-4 rounded-lg text-white;
+      }
+    }
+
+    .errors {
+      @apply pt-6;
+
+      .error {
+        @apply text-red-600;
+      }
+    }
+  }
+}
+

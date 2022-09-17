@@ -1,1 +1,19 @@
-<p>destination-picker works!</p>
+<div class="content">
+  <div class="header">
+    <h1 class="title">Kantonsspital Luzern</h1>
+  </div>
+  <div class="info">
+    <h1 class="welcome">Welcome to Kantonsspital Luzern.</h1>
+    <p class="choice-info">Please choose the patient you wish to visit.</p>
+  </div>
+  <div class="card">
+    <input type="text" class="input" [(ngModel)]="name" placeholder="Enter Name">
+    <div class="button-wrapper">
+      <button class="continue" (click)="searchPerson()">Continue</button>
+    </div>
+    <div class="errors">
+      <div class="error" *ngFor="let error of errors">{{error}}</div>
+    </div>
+  </div>
+</div>
+
