@@ -23,9 +23,7 @@ def new_session():
         in_memory_storage.Ride(
             user_id,
             ride['from_floor'],
-            ride['to_floor'],
-            ride['room'],
-            ride['patient_name']
+            ride['to_floor']
         )
     )
 
