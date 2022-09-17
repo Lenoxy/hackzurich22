@@ -15,25 +15,26 @@ CORS(app)
 
 sock = Sock(app)
 
-gen = SnowflakeGenerator(42)
+global user_id
+user_id = 0
 
 
-@app.route("/new", methods=['POST'])
+
+@app.route("/ride/new", methods=['POST'])
 def new_session():
     ride = request.get_json()
-    id = str(next(gen))
+    user_id += 1
+    in_memory_storage.elevators[0].rides.append(
+        in_memory_storage.Ride(
+            user_id,
+            ride['from_floor'],
+            ride['to_floor'],
+            ride['room'],
+            ride['patient_name']
+        )
+    )
 
-    # in_memory_storage.rides.append(
-    #     in_memory_storage.Ride(
-    #         id,
-    #         ride['from_floor'],
-    #         ride['to_floor'],
-    #         ride['room'],
-    #         ride['patient_name']
-    #     )
-    # )
-
-    return id
+    return user_id
 
 
 
@@ -46,10 +47,10 @@ def smartphone_ws(ws):
 @sock.route('/lobby')
 def lobby_ws(ws):
     while True:
-        lobby.tbd()
+        lobby.open_ws(ws, ws.receive())
 
 
 @sock.route('/elevator')
 def elevator_ws(ws):
     while True:
-        elevator.tbd()
+        elevator.open_ws(ws, ws.receive())
