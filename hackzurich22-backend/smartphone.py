@@ -1,19 +1,13 @@
 import json
 from in_memory_storage import Elevator, Ride, elevators
 from datetime import datetime
+from elevator import getAvailableElevator
 
 
 class OrderElevator:
     customer_id: int
     from_floor: int
     to_floor: int
-
-
-def getAvailableElevator():
-    # todo implement
-    # for elevator in elevators:
-    #     if elevator.state == "waiting"
-    return elevators.__getitem__(0)
 
 
 def order(ws, order: OrderElevator):

@@ -7,7 +7,8 @@ from flask_sock import Sock
 import in_memory_storage
 from flask import request
 
-import smartphone, elevator, lobby
+import smartphone, elevator
+from elevator import  getAvailableElevator
 
 app = Flask(__name__)
 CORS(app)
@@ -19,13 +20,15 @@ sock = Sock(app)
 def new_ride():
     ride = request.get_json()
     user_id = in_memory_storage.get_ride_id()
-    in_memory_storage.elevators[0].rides.append(
+    elevator_to_use = getAvailableElevator()
+    elevator_to_use.rides.append(
         in_memory_storage.Ride(
             user_id,
             ride['from_floor'],
             ride['to_floor']
         )
     )
+    elevator_to_use.websocket.send(elevator_to_use.toJSON())
     return str(user_id)
 
 
@@ -34,12 +37,6 @@ def new_ride():
 def smartphone_ws(ws):
     while True:
         smartphone.order(ws, json.loads(ws.receive()))
-
-
-@sock.route('/lobby')
-def lobby_ws(ws):
-    while True:
-        lobby.open_ws(ws, ws.receive())
 
 
 @sock.route('/elevator')

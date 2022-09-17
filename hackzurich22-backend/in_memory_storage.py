@@ -1,6 +1,8 @@
 import json
 from typing import List
 
+from websockets.legacy.server import WebSocketServerProtocol
+
 
 class Ride:
     def __init__(self, customer_id: int, from_floor: int, to_floor: int):
@@ -12,14 +14,15 @@ class Ride:
     from_floor: int
     to_floor: int
 
-
 class Elevator:
-    def __init__(self, name: str, state: str, floor: int, rides: List[Ride]):
+    def __init__(self, ws: WebSocketServerProtocol, name: str, state: str, floor: int, rides: List[Ride]):
+        self.websocket = ws
         self.name = name
         self.state = state
         self.floor = floor
         self.rides = rides
 
+    websocket: WebSocketServerProtocol
     name: str
     state: str
     floor: int
@@ -31,7 +34,6 @@ class Elevator:
 
 
 elevators: List[Elevator] = list()
-
 
 def get_ride_id():
     x = 1
