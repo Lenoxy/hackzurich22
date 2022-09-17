@@ -35,7 +35,10 @@ class Elevator:
     rides: List[Ride] = list()
 
     def toJSON(self):
-        return json.dumps({"name": self.name, "state": self.state, "floor": self.floor, "rides": self.rides})
+        string_rides = []
+        for ride in self.rides:
+            string_rides.append(ride.toJSON())
+        return json.dumps({"name": self.name, "state": self.state, "floor": self.floor, "rides": string_rides})
 
 
 
