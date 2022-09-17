@@ -34,7 +34,6 @@ class Elevator:
 
 
 elevators: List[Elevator] = list()
-lobby_screens: List[LobbyScreen] = list()
 
 def get_ride_id():
     x = 1
