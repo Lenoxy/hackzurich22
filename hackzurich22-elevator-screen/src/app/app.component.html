@@ -5,7 +5,7 @@
   <div class="passengers">
     <div class="passenger" *ngFor="let passenger of passengers">
       <div class="passenger__number">{{passenger.persNumber}}</div>
-      <div class="passenger__unboard" *ngIf="passenger.destinationFloor === floor">
+      <div class="passenger__unboard" *ngIf="passenger.destinationFloor === floor && state === 'unboarding'">
         <img src="assets/arrow.png" alt="arrow" class="arrow">
       </div>
     </div>
