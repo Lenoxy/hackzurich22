@@ -1,3 +1,13 @@
-.content {
-  @apply h-screen bg-gray-100;
+:host {
+  display: block;
+  height: 100%;
 }
+
+.content {
+  // @apply h-screen;
+}
+
+.pop-up {
+  box-shadow: 0px 5px 10px #333333;
+}
+

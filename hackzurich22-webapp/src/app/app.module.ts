@@ -9,15 +9,19 @@ import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { WsService } from './services/ws.service';
 import { HeaderComponent } from './components/header/header.component';
+import { CommonModule } from '@angular/common';
+import {TripComponent} from "./components/trip/trip.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     DestinationPickerComponent,
-    HeaderComponent
+    HeaderComponent,
+    TripComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule

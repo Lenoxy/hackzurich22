@@ -1,3 +1,148 @@
-<div class="content">
+<div class="content flex flex-col justify-between h-full">
+  <div class="pb-20">
+    <section>
+      <h1 class="font-bold text-2xl">Good Morning {{customerName}},</h1>
+      <p *ngIf="customerState !== 'arrivedAtDestination'" class="my-4">
+        Your identity code is <b>{{identityCode}}</b>, this will guide you to your destination if you are looking for direction
+        outside this app.
+      </p>
 
+      <p *ngIf="customerState === 'arrivedAtDestination'" class="my-4">
+        We wish you a nice time with your love one. Just tell as when it's time to go back.
+      </p>
+    </section>
+
+   <div class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'enteredBuilding'">
+      <h2>Next Step</h2>
+      <h3 class="font-bold text-xl">Elevator to {{targetFloor}} Floor</h3>
+
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="orderElevator()">Order Elevator now</button>
+      <button class="mt-2 w-full flex justify-center" (click)="startWalking()">
+        <div class="flex items-center"><img src="assets/icons/stair.png" class="h-4 mr-4"> I am taking the stairs</div>
+      </button>
+    </div>
+
+    <div class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'walkingStairs'">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-xl">Walking to {{targetFloor}} Floor</h3>
+
+      <img src="assets/stairs_walking.gif" class="h-16 mx-auto mt-4">
+
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="walkingCompleted()">I arrived on the {{targetFloor}}</button>
+      <button class="mt-2 w-full flex justify-center" (click)="changeFromWalingToElevator()">
+        <div class="flex items-center"><img src="assets/icons/elevator.png" class="h-4 mr-4"> I want to change to elevator</div>
+      </button>
+    </div>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'waitingForElevator'">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-xl">Waiting For Elevator</h3>
+
+      <span class="mt-4 block">
+        You will travel with elevator <b>{{elevatorId}}</b> please be ready to Board it will arrive shortly.
+      </span>
+    </section>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'boardingElevator'">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-xl">Boarding Elevator</h3>
+
+      <span class="mt-4 block">
+        Your elevator <b>{{elevatorId}}</b> has arrived, please board now.
+      </span>
+    </section>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'raidingElevator'">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-xl">Raiding Elevator</h3>
+
+      <span class="mt-4 block">
+        Pleas leave the elevator on the {{targetFloor}} floor. There will be {{stopsToTarget}} stops before your destination.
+      </span>
+
+      <button class="w-full text-red-700 mt-4 underline" (click)="missedElevator()"> I missed the elevator</button>
+    </section>
+
+   <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'unBoardingElevator'">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-2xl">Unboarding Elevator</h3>
+
+      <span class="mt-4 block">
+        You have arrived on the {{targetFloor}} floor Please leave the elevator now.
+      </span>
+    </section>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'onTargetFloor' && !onReturnWay">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-2xl">Walking to Room {{roomToGo}}</h3>
+
+      <span class="mt-4 block h-20 w-full overflow-scroll">
+        <img src="assets/map.png" class="map h-96 w-96  max-w-none">
+      </span>
+
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="arrived()">I arrived at {{pacientName}} room</button>
+
+      <button class="w-full text-red-700 mt-4 underline" (click)="didNotUnboard()">
+        <span *ngIf="didUseElevator">I forgot to unboard</span>
+        <span *ngIf="!didUseElevator">I walked to the wrong floor</span>
+      </button>
+    </section>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'onTargetFloor' && onReturnWay">
+      <h2>Current Step</h2>
+      <h3 class="font-bold text-2xl">Arrived at starting point {{exitPoint}}</h3>
+
+      <button class="w-full text-red-700 mt-4 underline" (click)="didNotUnboard()">
+        <span *ngIf="didUseElevator">I forgot to unboard</span>
+        <span *ngIf="!didUseElevator">I walked to the wrong floor</span>
+      </button>
+    </section>
+
+
+    <section class="h-16 py-2 flex items-center flex-col relative" *ngIf="customerState !== 'arrivedAtDestination' && customerState !== 'leftBuilding' && !(onReturnWay && customerState === 'onTargetFloor') ">
+      <span class="block w-2 h-2 rounded-full bg-gray-300"></span>
+      <span class="block w-2 h-2 rounded-full bg-gray-300 mt-2"></span>
+      <span class="block w-2 h-2 rounded-full bg-gray-300 mt-2"></span>
+      <span class="absolute top-4 right-12 text-gray-500">ca. {{ travelDuration }}</span>
+    </section>
+
+    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState !== 'arrivedAtDestination' && !onReturnWay">
+      <h2 class="font-bold">{{pacientName}}</h2>
+      <h3 class="text-xl">Room {{roomToGo}}</h3>
+    </section>
+
+    <section class="bg-white shadow-2xl rounded p-4" *ngIf="customerState !== 'arrivedAtDestination' && onReturnWay && customerState !== 'onTargetFloor'">
+      <h2 class="font-bold">Exit</h2>
+      <h3 class="text-xl">{{ exitPoint }}</h3>
+    </section>
+
+    <section class="bg-white shadow-2xl rounded p-4" *ngIf="customerState === 'arrivedAtDestination' && !onReturnWay">
+      <h2 class="font-bold">{{pacientName}}</h2>
+      <h3 class="text-xl">Room {{roomToGo}}</h3>
+
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="goBack()">I want to go back</button>
+      <button class="mt-4 bg-red-700 rounded w-full text-white py-1 font-semibold" (click)="emergency()">Call a doctor</button>
+
+    </section>
+  </div>
+
+  <div class="fixed bottom-0 left-0 right-0 bg-white px-4 py-3">
+    <button class="bg-red-600 w-full lost-button text-white rounded-full py-2" (click)="gotLost()">
+      Help me, I got lost
+    </button>
+  </div>
+
+  <section class="bg-white absolute h-40 bottom-0 w-screen left-0 rounded-t-xl pop-up px-4 py-8 font-semibold overflow-hidden"
+           [ngClass]="{'hidden': !showingLostPopUp, 'block': showingLostPopUp }">
+    Don't worry. Tell us on which flor you are and we get an elevator ready for you.
+    <div class="mt-4 flex space-x-2">
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(0)">0</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(1)">1</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(2)">2</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(3)">3</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(4)">4</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(5)">5</button>
+      <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(6)">6</button>
+    </div>
+  </section>
 </div>
