@@ -21,7 +21,8 @@ export class DestinationPickerComponent implements OnInit {
   ]
 
   searchPerson() {
-   this.errors = [];
+    this.router.navigate(['/trip']);
+   /*this.errors = [];
     if (!this.name) {
       this.errors.push('Please enter a name.');
     } else {
@@ -33,7 +34,7 @@ export class DestinationPickerComponent implements OnInit {
           this.router.navigate(['/trip']);
         })
       }
-    }
+    }*/
   }
 
   ngOnInit(): void {
