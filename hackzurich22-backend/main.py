@@ -1,6 +1,7 @@
 import json
 
 from flask import Flask
+from flask_cors import CORS
 from flask_sock import Sock
 from snowflake import SnowflakeGenerator
 
@@ -10,6 +11,8 @@ from flask import request
 from service import smartphone, elevator, lobby
 
 app = Flask(__name__)
+CORS(app)
+
 sock = Sock(app)
 
 gen = SnowflakeGenerator(42)
