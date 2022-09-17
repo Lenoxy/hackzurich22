@@ -16,11 +16,7 @@ async def handler():
         })
         await websocket.send(payload)
 
-        while True:
-            try:
-                message = await websocket.recv()
-            except websockets.ConnectionClosedOK:
-                break
+        async for message in websocket:
             print(message)
 
 asyncio.run(handler())
