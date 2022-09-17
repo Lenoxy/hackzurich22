@@ -7,7 +7,7 @@ import websockets
 
 BASE_URL = "wss://hack.myport.guide"
 
-async def hello():
+async def handler():
     async with websockets.connect(f'{BASE_URL}/') as websocket:
         payload = json.dumps({
             "Method": "SUBSCRIBE",
@@ -17,7 +17,10 @@ async def hello():
         await websocket.send(payload)
 
         while True:
-            resp = await websocket.recv()
-            print(resp)
+            try:
+                message = await websocket.recv()
+            except websockets.ConnectionClosedOK:
+                break
+            print(message)
 
-asyncio.run(hello())
+asyncio.run(handler())
