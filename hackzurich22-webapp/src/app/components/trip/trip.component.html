@@ -3,20 +3,20 @@
     <section>
       <h1 class="font-bold text-2xl">Good Morning {{customerName}},</h1>
       <p *ngIf="customerState !== 'arrivedAtDestination'" class="my-4">
-        Your identity code is <b>{{identityCode}}</b>, this will guide you to your destination if you are looking for direction
+        Your identity code is <b>{{identityCode}}</b>, this will guide you to your destination if you are looking for directions
         outside this app.
       </p>
 
       <p *ngIf="customerState === 'arrivedAtDestination'" class="my-4">
-        We wish you a nice time with your love one. Just tell as when it's time to go back.
+        We wish you a nice time with your loved one. Just tell us when it's time to go back.
       </p>
     </section>
 
    <div class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'enteredBuilding'">
       <h2>Next Step</h2>
-      <h3 class="font-bold text-xl">Elevator to {{targetFloor}} Floor</h3>
+      <h3 class="font-bold text-xl">Elevator to {{targetFloor}} floor</h3>
 
-      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="orderElevator()">Order Elevator now</button>
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="orderElevator()">Order elevator now</button>
       <button class="mt-2 w-full flex justify-center" (click)="startWalking()">
         <div class="flex items-center"><img src="assets/icons/stair.png" class="h-4 mr-4"> I am taking the stairs</div>
       </button>
@@ -24,11 +24,11 @@
 
     <div class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'walkingStairs'">
       <h2>Current Step</h2>
-      <h3 class="font-bold text-xl">Walking to {{targetFloor}} Floor</h3>
+      <h3 class="font-bold text-xl">Walking to {{targetFloor}} floor</h3>
 
       <img src="assets/stairs_walking.gif" class="h-16 mx-auto mt-4">
 
-      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="walkingCompleted()">I arrived on the {{targetFloor}}</button>
+      <button class="mt-4 bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="walkingCompleted()">I arrived on the {{targetFloor}} floor</button>
       <button class="mt-2 w-full flex justify-center" (click)="changeFromWalingToElevator()">
         <div class="flex items-center"><img src="assets/icons/elevator.png" class="h-4 mr-4"> I want to change to elevator</div>
       </button>
@@ -36,10 +36,10 @@
 
     <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'waitingForElevator'">
       <h2>Current Step</h2>
-      <h3 class="font-bold text-xl">Waiting For Elevator</h3>
+      <h3 class="font-bold text-xl">Waiting For elevator</h3>
 
       <span class="mt-4 block">
-        You will travel with elevator <b>{{elevatorId}}</b> please be ready to Board it will arrive shortly.
+        You will travel with elevator <b>{{elevatorId}}</b>. Please be ready to board. The elevator will arrive shortly.
       </span>
     </section>
 
@@ -54,27 +54,27 @@
 
     <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'raidingElevator'">
       <h2>Current Step</h2>
-      <h3 class="font-bold text-xl">Raiding Elevator</h3>
+      <h3 class="font-bold text-xl">Riding elevator</h3>
 
       <span class="mt-4 block">
-        Pleas leave the elevator on the {{targetFloor}} floor. There will be {{stopsToTarget}} stops before your destination.
+        Please leave the elevator on the {{targetFloor}} floor. There will be {{stopsToTarget}} stops before your destination.
       </span>
 
       <button class="w-full text-red-700 mt-4 underline" (click)="missedElevator()"> I missed the elevator</button>
     </section>
 
    <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'unBoardingElevator'">
-      <h2>Current Step</h2>
-      <h3 class="font-bold text-2xl">Unboarding Elevator</h3>
+      <h2>Current step</h2>
+      <h3 class="font-bold text-2xl">Unboarding elevator</h3>
 
       <span class="mt-4 block">
-        You have arrived on the {{targetFloor}} floor Please leave the elevator now.
+        You have arrived on the {{targetFloor}} floor. Please leave the elevator now.
       </span>
     </section>
 
     <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'onTargetFloor' && !onReturnWay">
       <h2>Current Step</h2>
-      <h3 class="font-bold text-2xl">Walking to Room {{roomToGo}}</h3>
+      <h3 class="font-bold text-2xl">Walking to room {{roomToGo}}</h3>
 
       <span class="mt-4 block h-20 w-full overflow-scroll">
         <img src="assets/map.png" class="map h-96 w-96  max-w-none">
@@ -89,7 +89,7 @@
     </section>
 
     <section class="bg-white drop-shadow-lg rounded p-4" *ngIf="customerState === 'onTargetFloor' && onReturnWay">
-      <h2>Current Step</h2>
+      <h2>Current step</h2>
       <h3 class="font-bold text-2xl">Arrived at starting point {{exitPoint}}</h3>
 
       <button class="w-full text-red-700 mt-4 underline" (click)="didNotUnboard()">
@@ -134,7 +134,7 @@
 
   <section class="bg-white absolute h-40 bottom-0 w-screen left-0 rounded-t-xl pop-up px-4 py-8 font-semibold overflow-hidden"
            [ngClass]="{'hidden': !showingLostPopUp, 'block': showingLostPopUp }">
-    Don't worry. Tell us on which flor you are and we get an elevator ready for you.
+    Don't worry. Tell us on which flor you are on and we'll get an elevator ready for you.
     <div class="mt-4 flex space-x-2">
       <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(0)">0</button>
       <button class="border border-gray-400 rounded px-2 py-1" (click)="startOver(1)">1</button>
