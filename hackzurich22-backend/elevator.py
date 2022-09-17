@@ -6,7 +6,7 @@ def open_ws(ws, lift_name: str):
     # on
     elevator = create_or_return_existing(lift_name)
     print(elevator)
-    ws.send(elevator)
+    ws.send(elevator.toJSON())
 
 
 def create_or_return_existing(name: str):
