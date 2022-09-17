@@ -17,7 +17,7 @@ export class DestinationPickerComponent implements OnInit {
   public errors: string[] = [];
   public name: string = '';
   public patients: Patient[] = [
-    {name: 'Max Muster', floor: 3, room: 303}
+    {name: 'Rosmarie Meier', floor: 3, room: 303}
   ]
 
   searchPerson() {
