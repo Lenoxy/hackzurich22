@@ -18,20 +18,27 @@ sock = Sock(app)
 gen = SnowflakeGenerator(42)
 
 
-@app.route("/new", methods=['POST'])
+def populate_elevators():
+    pass
+
+
+populate_elevators()
+
+
+@app.route("/ride/new", methods=['POST'])
 def new_session():
     ride = request.get_json()
     id = str(next(gen))
 
-    # in_memory_storage.rides.append(
-    #     in_memory_storage.Ride(
-    #         id,
-    #         ride['from_floor'],
-    #         ride['to_floor'],
-    #         ride['room'],
-    #         ride['patient_name']
-    #     )
-    # )
+    in_memory_storage.elevators[0].rides.append(
+        in_memory_storage.Ride(
+            id,
+            ride['from_floor'],
+            ride['to_floor'],
+            ride['room'],
+            ride['patient_name']
+        )
+    )
 
     return id
 
@@ -46,10 +53,10 @@ def smartphone_ws(ws):
 @sock.route('/lobby')
 def lobby_ws(ws):
     while True:
-        lobby.tbd()
+        lobby.open_ws(ws, ws.receive())
 
 
 @sock.route('/elevator')
 def elevator_ws(ws):
     while True:
-        elevator.tbd()
+        elevator.open_ws(ws, ws.receive())

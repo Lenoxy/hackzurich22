@@ -1,4 +1,5 @@
 import array
+from typing import List
 
 
 class Ride:
@@ -16,4 +17,9 @@ class Ride:
     patient_name: str
 
 
-rides = []
+class Elevator:
+    name: str
+    rides: List[Ride] = list()
+
+
+elevators: List[Elevator] = list()
