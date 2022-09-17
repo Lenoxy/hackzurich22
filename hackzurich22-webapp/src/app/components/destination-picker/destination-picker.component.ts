@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Patient } from 'src/app/models/patient.model';
 import { ApiService } from 'src/app/services/api.service';
 import { WsService } from 'src/app/services/ws.service';
@@ -31,6 +32,7 @@ export class DestinationPickerComponent implements OnInit {
       } else {
         this.apiService.callElevator(this.patients.find(patient => patient.name.toLowerCase() === this.name.toLowerCase()) as Patient).then(res => {
           console.log(res);
+          this.router.navigate(['/trip']);
         })
       }
     }*/

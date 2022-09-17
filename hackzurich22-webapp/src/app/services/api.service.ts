@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Patient } from "../models/patient.model";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ApiService {
 
   public callElevator(patient: Patient): Promise<string> {
     return new Promise<string>((resolve => {
-      this.http.post('http://localhost:5000/new', {
+      this.http.post(`${environment.apiUrl}/new`, {
         'from_floor': 0,
         'to_floor': patient.floor,
         'room': patient.room,

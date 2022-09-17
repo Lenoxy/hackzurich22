@@ -36,10 +36,6 @@ def new_session():
     return id
 
 
-@app.route("/")
-def new_session2():
-    return "<p>Hello, World!</p>"
-
 
 @sock.route('/smartphone')
 def smartphone_ws(ws):
