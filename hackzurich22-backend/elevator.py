@@ -1,6 +1,5 @@
 import json
-
-from ..in_memory_storage import Elevator, Ride, elevators
+from in_memory_storage import Elevator, Ride, elevators
 
 
 def open_ws(ws, lift_name: str):

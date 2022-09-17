@@ -1,7 +1,6 @@
 import json
+from in_memory_storage import Elevator, Ride, elevators
 from datetime import datetime
-
-from ..in_memory_storage import Elevator, Ride, elevators
 
 
 class OrderElevator:
