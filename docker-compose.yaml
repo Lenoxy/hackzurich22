@@ -17,6 +17,7 @@ services:
       - NGINX_HOST=localhost
       - NGINX_PORT=80
   backend:
+    container_name: hack-elevator-backend
     build: hackzurich22-backend
     ports:
       - "3000:5000"
