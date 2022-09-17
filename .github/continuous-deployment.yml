@@ -16,4 +16,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: cd /root/M151-M152-Personenverwaltung && ./deployment.sh
+          script: cd /root/hackzurich22 && bash hackzurich22-infrastructure/deployment.sh
