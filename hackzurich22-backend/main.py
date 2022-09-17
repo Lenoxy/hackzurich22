@@ -20,7 +20,7 @@ sock = Sock(app)
 def new_ride():
     ride = request.get_json()
     user_id = in_memory_storage.get_ride_id()
-    elevator_to_use = getAvailableElevator()
+    elevator_to_use = getAvailbleElevator()
     elevator_to_use.rides.append(
         in_memory_storage.Ride(
             # Websocket not open yet, only on order
@@ -30,7 +30,9 @@ def new_ride():
             ride['to_floor']
         )
     )
-    elevator_to_use.websocket.send(elevator_to_use.toJSON())
+    if elevator_to_use.websocket is not None:
+        if elevator_to_use.websocket.open:
+            elevator_to_use.websocket.send(elevator_to_use.toJSON())
     return str(user_id)
 
 

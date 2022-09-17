@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://css-appli18.com:3000',
-  wsApiUrl: 'ws://css-appli18.com:3000'
+  apiUrl: 'http://127.0.0.1:5000',
+  wsApiUrl: 'ws://127.0.0.1:5000'
 };

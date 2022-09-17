@@ -1,24 +1,25 @@
-import json
-from in_memory_storage import Elevator, Ride, elevators
-from datetime import datetime
-from elevator import getAvailableElevator
+from in_memory_storage import Elevator, Ride
 import asyncio
 import json
 import uuid
-from pprint import pprint
+from datetime import datetime
 
 import websockets
 
+from elevator import create_or_return_existing
+from in_memory_storage import Elevator, Ride
+
 BASE_URL = "wss://hack.myport.guide"
+
 
 async def lift_call_handler(from_floor, to_floor):
     async with websockets.connect(f'{BASE_URL}/') as websocket:
         # Stage 1: virtually press lift-request button
         inner_payload = {
             "asyncId": uuid.uuid4().hex,
-            "target": { "floor": from_floor }, # aka. `pickupFloor`
+            "target": {"floor": from_floor},  # aka. `pickupFloor`
             "options": {
-                "destination": { "destinationFloor": to_floor }
+                "destination": {"destinationFloor": to_floor}
             }
         }
         outer_payload = {
@@ -41,9 +42,10 @@ async def lift_call_handler(from_floor, to_floor):
                 pass
 
             assert event['type'] == 'inDoor'
-            if 'data' in event: # and event['data']['state'] == 'waiting':
+            if 'data' in event:  # and event['data']['state'] == 'waiting':
                 alloc = event['data']['allocation']
                 return alloc["car"]["name"]
+
 
 class OrderElevator:
     customer_id: int
@@ -51,12 +53,12 @@ class OrderElevator:
     to_floor: int
 
 
-def order(ws, order: OrderElevator):
+async def order(ws, order: OrderElevator):
     print(order.customer_id + order.from_floor)
     loop = asyncio.get_event_loop()
-    await assigned_lift = loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
+    assigned_lift = await loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
 
-    #elevator: Elevator = getAvailableElevator()
+    # elevator: Elevator = getAvailableElevator()
     elevator: Elevator = create_or_return_existing(ws, assigned_lift)
     elevator.rides.append(Ride(ws, order.customer_id, order.from_floor, order.to_floor))
     ws.send(json.dumps(type('obj', (object,),
