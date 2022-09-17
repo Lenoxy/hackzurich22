@@ -8,11 +8,13 @@ import { DestinationPickerComponent } from './components/destination-picker/dest
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { WsService } from './services/ws.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DestinationPickerComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
