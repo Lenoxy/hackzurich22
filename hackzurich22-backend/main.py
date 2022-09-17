@@ -46,5 +46,5 @@ def lobby_ws(ws):
 @sock.route('/elevator')
 def elevator_ws(ws):
     while True:
-        print(ws.receive())
+        print('hello')
         elevator.open_ws(ws, ws.receive())
