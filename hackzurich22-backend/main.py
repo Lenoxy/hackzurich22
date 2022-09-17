@@ -15,24 +15,23 @@ CORS(app)
 
 sock = Sock(app)
 
-gen = SnowflakeGenerator(42)
+global user_id
 
-
-def populate_elevators():
+def init():
+    user_id = 0
     pass
 
 
-populate_elevators()
+init()
 
 
 @app.route("/ride/new", methods=['POST'])
 def new_session():
     ride = request.get_json()
-    id = str(next(gen))
-
+    user_id += 1
     in_memory_storage.elevators[0].rides.append(
         in_memory_storage.Ride(
-            id,
+            user_id,
             ride['from_floor'],
             ride['to_floor'],
             ride['room'],
@@ -40,7 +39,7 @@ def new_session():
         )
     )
 
-    return id
+    return user_id
 
 
 
