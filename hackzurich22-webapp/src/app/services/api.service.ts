@@ -17,8 +17,7 @@ export class ApiService {
       this.http.post(`${environment.apiUrl}/ride/new`, {
         'from_floor': 0,
         'to_floor': patient.floor,
-        'room': patient.room,
-        'patient_name': patient.name
+        'room': patient.room
       }).forEach(res => {
         resolve(res as string);
       }).catch(error => console.log(error))

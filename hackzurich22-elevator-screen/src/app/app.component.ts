@@ -19,13 +19,10 @@ export class AppComponent {
   ];
 
   constructor(private wsService: WsService) {
-    this.sendStartMessage();
-    wsService.messages.subscribe(msg => {
-      console.log(msg);
+    wsService.messages.subscribe((msg: any) => {
+      this.floor = msg.floor || msg.floor === 0 ? msg.floor : this.floor;
+      console.log(msg.rides);
     })
-  }
-
-  sendStartMessage() {
   }
 
 }

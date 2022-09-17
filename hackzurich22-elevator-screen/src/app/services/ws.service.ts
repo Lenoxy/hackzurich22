@@ -11,12 +11,12 @@ import { environment } from '../../environments/environment';
 export class WsService {
   private  wsUrl = `${environment.wsApiUrl}/elevator` // ??
   private subject: AnonymousSubject<MessageEvent> | undefined;
-  public messages: Subject<Message>;
+  public messages: Subject<string>;
 
   constructor() {
-    this.messages = <Subject<Message>>this.connect(this.wsUrl).pipe(
+    this.messages = <Subject<string>>this.connect(this.wsUrl).pipe(
       map(
-        (response: MessageEvent): Message => {
+        (response: MessageEvent): string => {
           let data = JSON.parse(response.data)
           return data;
         }
@@ -38,10 +38,7 @@ export class WsService {
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
       ws.onopen = () => {
-        const message = {
-          source: 'elevator',
-          content: 'A'
-        }
+        const message = 'A'
         this.messages.next(message);
       }
       return ws.close.bind(ws);
