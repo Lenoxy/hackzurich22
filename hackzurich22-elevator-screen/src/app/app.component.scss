@@ -1,0 +1,46 @@
+.screen {
+  @apply w-screen h-screen;
+
+  .header {
+    @apply h-40 bg-cyan-600 text-white flex justify-around shadow-slate-400 shadow-xl;
+
+    .floor {
+      @apply font-bold;
+      font-size: 96px;
+    }
+  }
+
+  .passengers {
+
+    .passenger {
+      @apply w-screen border flex justify-between;
+
+      &__number {
+        @apply font-bold pl-8;
+        font-size: 64px;
+      }
+
+      &__unboard {
+        @apply text-red-600 pr-32;
+        font-size: 64px;
+
+        .arrow {
+          @apply h-20 mt-2;
+          animation: blink 1250ms infinite;
+        }
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
