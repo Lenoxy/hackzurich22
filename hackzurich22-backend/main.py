@@ -16,13 +16,8 @@ CORS(app)
 sock = Sock(app)
 
 global user_id
+user_id = 0
 
-def init():
-    user_id = 0
-    pass
-
-
-init()
 
 
 @app.route("/ride/new", methods=['POST'])
