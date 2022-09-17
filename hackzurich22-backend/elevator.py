@@ -4,8 +4,16 @@ from in_memory_storage import Elevator, Ride, elevators
 
 def open_ws(ws, lift_name: str):
     # on
-    elevator = Elevator(lift_name, "idle", 0, [])
+    elevator = create_or_return_existing(lift_name)
+    print(elevator)
+    ws.send(elevator)
+
+
+def create_or_return_existing(name: str):
+    for elevator in elevators:
+        if elevator.name == name:
+            return elevator
+
+    elevator = Elevator(name, "idle", 0, [])
     elevators.append(elevator)
-    x = elevator.toJSON()
-    print(x)
-    ws.send(x)
+    return elevator
