@@ -64,3 +64,8 @@ async def order(ws, order: OrderElevator):
     ws.send(json.dumps(type('obj', (object,),
                             {'name': elevator.name, 'arrival_timestamp': datetime.now()}
                             )))
+    # caution: we reworked the code to include the elevator logic from main.py
+    # but we also deleted the second (seemingly unused elevator ride). Undo if needed.
+    if elevator.websocket is not None:
+        if elevator.websocket.open:
+            elevator.websocket.send(elevator.toJSON())
