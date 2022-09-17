@@ -9,6 +9,8 @@ import websockets
 BASE_URL = "wss://hack.myport.guide"
 
 POSITION_TRACKER = dict()
+DOOR_STATUS_TRACKER = dict()
+MOVEMENT_TRACKER = dict()
 
 async def lift_status_handler():
     async with websockets.connect(f'{BASE_URL}/') as websocket:
@@ -39,12 +41,19 @@ async def lift_status_handler():
 
             liftId = data['target']  # e.g. "1.1.2", uses hierarchical naming to reflect {building}.{group}.{car}
             floor = data['floor']
+            doorState = data['doorState']
+            movement = data['movingState']
+
             POSITION_TRACKER[liftId] = floor
+            DOOR_STATUS_TRACKER[liftId] = doorState
+            MOVEMENT_TRACKER[liftId] = movement
 
 async def periodic_log():
     while True:
         await asyncio.sleep(5)
         pprint(POSITION_TRACKER)
+        pprint(DOOR_STATUS_TRACKER)
+        pprint(MOVEMENT_TRACKER)
         print()
 
 async def handler():
