@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from 'src/app/models/patient.model';
 import { ApiService } from 'src/app/services/api.service';
 import { WsService } from 'src/app/services/ws.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-destination-picker',
@@ -10,7 +11,7 @@ import { WsService } from 'src/app/services/ws.service';
 })
 export class DestinationPickerComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private wsService: WsService) {
+  constructor(private apiService: ApiService, private wsService: WsService, private router: Router) {
   }
 
   public errors: string[] = [];
@@ -20,7 +21,8 @@ export class DestinationPickerComponent implements OnInit {
   ]
 
   searchPerson() {
-    this.errors = [];
+    this.router.navigate(['/trip']);
+   /* this.errors = [];
     if (!this.name) {
       this.errors.push('Please enter a name.');
     } else {
@@ -31,7 +33,7 @@ export class DestinationPickerComponent implements OnInit {
           console.log(res);
         })
       }
-    }
+    }*/
   }
 
   ngOnInit(): void {

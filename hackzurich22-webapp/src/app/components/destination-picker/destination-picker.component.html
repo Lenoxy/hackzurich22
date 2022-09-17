@@ -1,16 +1,13 @@
 <div class="content">
   <div class="header">
-    <h1 class="title">Kantonsspital Luzern</h1>
   </div>
-  <div class="info">
-    <h1 class="welcome">Welcome to Kantonsspital Luzern.</h1>
-    <p class="choice-info">Please choose the patient you wish to visit.</p>
+  <div class="">
+    <h1 class="text-2xl font-bold">Welcome to Kantonsspital Luzern.</h1>
   </div>
-  <div class="card">
-    <input type="text" class="input" [(ngModel)]="name" placeholder="Enter Name">
-    <div class="button-wrapper">
-      <button class="continue" (click)="searchPerson()">Continue</button>
-    </div>
+  <div class="drop-shadow-2xl bg-white p-4 rounded mt-10">
+    <p>Please tell us the name of the patient you wish to visit:</p>
+    <input class="border rounded border-gray-600 w-full px-1 py-2 my-3" type="text" [(ngModel)]="name" placeholder="Chuck Norris">
+      <button class="bg-sky-900 rounded w-full text-white py-1 font-semibold" (click)="searchPerson()">Start your trip</button>
     <div class="errors">
       <div class="error" *ngFor="let error of errors">{{error}}</div>
     </div>
