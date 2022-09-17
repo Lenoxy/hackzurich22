@@ -1,0 +1,13 @@
+<div class="screen">
+  <div class="header">
+    <h1 class="floor">{{floor}}</h1>
+  </div>
+  <div class="passengers">
+    <div class="passenger" *ngFor="let passenger of passengers">
+      <div class="passenger__number">{{passenger.persNumber}}</div>
+      <div class="passenger__unboard" *ngIf="passenger.destinationFloor === floor && state === 'unboarding'">
+        <img src="assets/arrow.png" alt="arrow" class="arrow">
+      </div>
+    </div>
+  </div>
+</div>
