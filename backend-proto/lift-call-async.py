@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import uuid
 from pprint import pprint
 
 import websockets
@@ -12,14 +13,14 @@ async def lift_call_handler():
     async with websockets.connect(f'{BASE_URL}/') as websocket:
         # Stage 1: virtually press lift-request button
         inner_payload = {
-            "asyncId": "mytoken",
+            "asyncId": uuid.uuid4().hex,
             "target": { "floor": 10 }, # aka. `pickupFloor`
             "options": {
                 "destination": { "destinationFloor": -1 }
             }
         }
         outer_payload = {
-            "asyncId": 1,
+            "asyncId": uuid.uuid4().hex,
             "Request-URI": "/publish/",
             "Method": "POST",
             "body-json": inner_payload,
