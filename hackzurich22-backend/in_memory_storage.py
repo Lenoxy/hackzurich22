@@ -5,14 +5,20 @@ from websockets.legacy.server import WebSocketServerProtocol
 
 
 class Ride:
-    def __init__(self, customer_id: int, from_floor: int, to_floor: int):
+    def __init__(self, ws: WebSocketServerProtocol, customer_id: int, from_floor: int, to_floor: int):
+        self.websocket = ws
         self.customer_id = customer_id
         self.from_floor = from_floor
         self.to_floor = to_floor
 
+    websocket: WebSocketServerProtocol
     customer_id: int
     from_floor: int
     to_floor: int
+
+    def toJSON(self):
+        return json.dumps({"customer_id": self.customer_id, "from_floor": self.from_floor, "to_floor": self.to_floor})
+
 
 class Elevator:
     def __init__(self, ws: WebSocketServerProtocol, name: str, state: str, floor: int, rides: List[Ride]):
@@ -29,11 +35,12 @@ class Elevator:
     rides: List[Ride] = list()
 
     def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=True, indent=4)
+        return json.dumps({"name": self.name, "state": self.state, "floor": self.floor, "rides": self.rides})
+
 
 
 elevators: List[Elevator] = list()
+
 
 def get_ride_id():
     x = 1

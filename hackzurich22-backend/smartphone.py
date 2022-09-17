@@ -11,9 +11,9 @@ class OrderElevator:
 
 
 def order(ws, order: OrderElevator):
-    print("not implemented")
+
     elevator: Elevator = getAvailableElevator()
-    elevator.rides.append(Ride(order.customer_id, order.from_floor, order.to_floor))
+    elevator.rides.append(Ride(ws, order.customer_id, order.from_floor, order.to_floor))
     ws.send(json.dumps(type('obj', (object,),
                             {'name': elevator.name, 'arrival_timestamp': datetime.now()}
                             )))

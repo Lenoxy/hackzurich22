@@ -1,5 +1,5 @@
 import json
-from in_memory_storage import Elevator, Ride, elevators
+from in_memory_storage import Elevator, elevators
 
 
 def open_ws(ws, lift_name: str):
@@ -22,4 +22,6 @@ def getAvailableElevator():
     # todo implement
     # for elevator in elevators:
     #     if elevator.state == "waiting"
+    if len(elevators) == 0:
+        raise IndexError()
     return elevators[0]

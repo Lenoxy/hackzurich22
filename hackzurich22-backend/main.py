@@ -1,14 +1,14 @@
 import json
 
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 from flask_sock import Sock
 
+import elevator
 import in_memory_storage
-from flask import request
-
-import smartphone, elevator
-from elevator import  getAvailableElevator
+import smartphone
+from elevator import getAvailableElevator
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +23,8 @@ def new_ride():
     elevator_to_use = getAvailableElevator()
     elevator_to_use.rides.append(
         in_memory_storage.Ride(
+            # Websocket not open yet, only on order
+            None,
             user_id,
             ride['from_floor'],
             ride['to_floor']
@@ -30,7 +32,6 @@ def new_ride():
     )
     elevator_to_use.websocket.send(elevator_to_use.toJSON())
     return str(user_id)
-
 
 
 @sock.route('/smartphone')
@@ -42,5 +43,4 @@ def smartphone_ws(ws):
 @sock.route('/elevator')
 def elevator_ws(ws):
     while True:
-        print('hello')
         elevator.open_ws(ws, ws.receive())
