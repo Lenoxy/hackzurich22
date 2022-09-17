@@ -14,15 +14,11 @@ CORS(app)
 
 sock = Sock(app)
 
-global user_id
-user_id = 0
-
-
 
 @app.route("/ride/new", methods=['POST'])
 def new_session():
     ride = request.get_json()
-    user_id += 1
+    user_id = in_memory_storage.get_ride_id()
     in_memory_storage.elevators[0].rides.append(
         in_memory_storage.Ride(
             user_id,

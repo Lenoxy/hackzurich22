@@ -26,3 +26,10 @@ class Elevator:
 
 
 elevators: List[Elevator] = list()
+
+
+def get_ride_id():
+    x = 1
+    for elevator in elevators:
+        x += len(elevator.rides)
+    return x
