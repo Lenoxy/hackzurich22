@@ -11,6 +11,7 @@ import { WsService } from './services/ws.service';
 import { HeaderComponent } from './components/header/header.component';
 import { CommonModule } from '@angular/common';
 import {TripComponent} from "./components/trip/trip.component";
+import { PatientService } from './services/patient.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import {TripComponent} from "./components/trip/trip.component";
     FormsModule,
     HttpClientModule
   ],
-  providers: [ApiService, WsService],
+  providers: [ApiService, WsService, PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,7 +17,7 @@ type State =
   templateUrl: './trip.component.html',
   styleUrls: ['./trip.component.scss']
 })
-export class TripComponent implements OnInit {
+export class TripComponent {
 
   customerState: State = "enteredBuilding";
 
@@ -50,10 +50,6 @@ export class TripComponent implements OnInit {
   constructor(private wsService: WsService) { }
 
   timeouts: any[] = [];
-
-  ngOnInit(): void {
-    console.log(this.wsService.getWsId());
-  }
 
   orderElevator() {
     this.customerState = "waitingForElevator";
