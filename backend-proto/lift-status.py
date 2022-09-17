@@ -53,4 +53,5 @@ async def handler():
         periodic_log(),
     )
 
-asyncio.run(handler())
+loop = asyncio.get_event_loop()
+result = loop.run_until_complete(handler())
