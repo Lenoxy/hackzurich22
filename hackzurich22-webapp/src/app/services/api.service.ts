@@ -14,14 +14,14 @@ export class ApiService {
 
   public callElevator(patient: Patient): Promise<string> {
     return new Promise<string>((resolve => {
-      this.http.post(`${environment.apiUrl}/new`, {
+      this.http.post(`${environment.apiUrl}/ride/new`, {
         'from_floor': 0,
         'to_floor': patient.floor,
         'room': patient.room,
         'patient_name': patient.name
       }).forEach(res => {
         resolve(res as string);
-      })
+      }).catch(error => console.log(error))
     }))
   }
 }

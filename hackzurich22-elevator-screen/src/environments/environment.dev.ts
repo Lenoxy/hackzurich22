@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   wsApiUrl: 'ws://css-appli18.com:3000'
 };

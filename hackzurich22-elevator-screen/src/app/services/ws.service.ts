@@ -2,13 +2,14 @@ import { Injectable } from "@angular/core";
 import {map, Observable, Observer } from "rxjs";
 import { AnonymousSubject, Subject } from "rxjs/internal/Subject";
 import { Message } from "../models/message.model";
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class WsService {
-  private  wsUrl = 'ws://localhost:3000/' // ??
+  private  wsUrl = `${environment.wsApiUrl}/elevator` // ??
   private subject: AnonymousSubject<MessageEvent> | undefined;
   public messages: Subject<Message>;
 
@@ -36,6 +37,13 @@ export class WsService {
       ws.onmessage = obs.next.bind(obs);
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
+      ws.onopen = () => {
+        const message = {
+          source: 'elevator',
+          content: 'A'
+        }
+        this.messages.next(message);
+      }
       return ws.close.bind(ws);
     })
     let observer = {

@@ -19,10 +19,13 @@ export class AppComponent {
   ];
 
   constructor(private wsService: WsService) {
+    this.sendStartMessage();
     wsService.messages.subscribe(msg => {
       console.log(msg);
     })
   }
 
+  sendStartMessage() {
+  }
 
 }
