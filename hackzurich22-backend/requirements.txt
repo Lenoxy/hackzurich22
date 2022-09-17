@@ -3,3 +3,4 @@ websockets>=10.3
 asyncio>=3.4.3
 websockets-routes>=0.2
 snowflake-id
+flask-sock
