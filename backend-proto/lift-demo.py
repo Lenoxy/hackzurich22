@@ -14,12 +14,11 @@ BASE_URL = "https://hack.myport.guide"
 
 # POST to start a lift movement
 JSON_DATA = {
-    "asyncId": "1400781663740690789",
-    "identity": {
-        "type": "id",
-        "textId": "1663369570907.0.0"
+    "asyncId": "mytoken",
+    "target": {
+        "floor": 0,
+        "zone": "Lobby",
     },
-    "target": "1.56.10.10",
     "options": {
         "destination": {
             "destinationFloor": 10,
@@ -37,7 +36,13 @@ print('********')
 # GET to monitor lift status
 url = f'{BASE_URL}/async/{async_id}/'
 print(url)
-for i in range(10):
+while True:
     resp = httpx.get(url)
-    print(resp.json())
+    j = resp.json()
+    print(j)
+    try:
+        if j['state'] == 'succeeded':
+            break
+    except KeyError:
+        pass  # final status messsage doesn't have nested structure `j['data']['state']`
     time.sleep(1)
