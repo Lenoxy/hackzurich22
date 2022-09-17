@@ -6,6 +6,6 @@ def open_ws(ws, lift_name: str):
     # on
     elevator = Elevator(lift_name, "idle", 0, [])
     elevators.append(elevator)
-    x = json.dumps(elevator)
+    x = elevator.toJSON()
     print(x)
     ws.send(x)
