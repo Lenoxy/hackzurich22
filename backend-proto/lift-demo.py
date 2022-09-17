@@ -3,10 +3,17 @@
 # Hacky test script to demonstrate how to call a lift and monitor its progress.
 # See live demo: https://hack.myport.guide/ui/paas/demo/indoor-journey
 
+import json
+import time
+import urllib.parse
+import urllib.request
+
+import httpx
+
 BASE_URL = "https://hack.myport.guide"
 
-JSON_DATA = b"""
-{
+# POST to start a lift movement
+JSON_DATA = {
     "asyncId": "1400781663740690789",
     "identity": {
         "type": "id",
@@ -16,25 +23,14 @@ JSON_DATA = b"""
     "options": {
         "destination": {
             "destinationFloor": 10,
-            "destinationZone": "Penthouse"
+            "destinationZone": "Penthouse",
         }
     }
 }
-"""
 
-import json
-import time
-import urllib.parse
-import urllib.request
+resp = httpx.post(f'{BASE_URL}/publish/', json=JSON_DATA)
+async_id = resp.json()['asyncId']
 
-# POST to start a lift movement
-url = f'{BASE_URL}/publish/'
-headers = { 'Content-Type': "application/json" }
-
-req = urllib.request.Request(url, JSON_DATA, headers)
-response = urllib.request.urlopen(req)
-json_payload = response.read()
-async_id = json.loads(json_payload)['asyncId']
 print(async_id)
 print('********')
 
@@ -42,7 +38,6 @@ print('********')
 url = f'{BASE_URL}/async/{async_id}/'
 print(url)
 for i in range(10):
-    req = urllib.request.Request(url)
-    response = urllib.request.urlopen(req)
-    print(response.read())
+    resp = httpx.get(url)
+    print(resp.json())
     time.sleep(1)
