@@ -29,7 +29,6 @@ export class DestinationPickerComponent implements OnInit {
         this.errors.push('The requested person could not be found.')
       } else {
         this.apiService.callElevator(this.patients.find(patient => patient.name.toLowerCase() === this.name.toLowerCase()) as Patient).then(res => {
-          console.log(res);
           this.router.navigate(['/trip']);
         })
       }
