@@ -1,44 +1,57 @@
-#!/usr/bin/env python
-
-import asyncio
 import json
 
 from flask import Flask
-from websockets import serve
+from flask_sock import Sock
+from snowflake import SnowflakeGenerator
 
-import smartphone
+import in_memory_storage
+from flask import request
 
+from service import smartphone, elevator, lobby
 
-async def router(websocket, path):
-    async for message in websocket:
-        if matches_path(path, "/smartphone"):
-            # {id: string, from_floor: number, to_floor: number}
-            await smartphone.order(websocket, json.loads(message))
-        elif matches_path(path, "/lobby"):
-            # I assume we get the lift number from the message
-            return
-        elif matches_path(path, "/elevator"):
-            # I assume we get the lift number from the message
-            return
-        else:
-            print("unknown WS path:" + path)
+# Port 5000
+app = Flask(__name__)
+sock = Sock(app)
+
+gen = SnowflakeGenerator(42)
 
 
-def matches_path(path, str):
-    if path == str:
-        return True
-    elif path + "/" == str:
-        return True
-    elif path == str + "/":
-        return True
-    else:
-        return False
+@app.route("/new", methods=['POST'])
+def new_session():
+    ride = request.get_json()
+    id = str(next(gen))
+
+    in_memory_storage.rides.append(
+        in_memory_storage.Ride(
+            id,
+            ride['from_floor'],
+            ride['to_floor'],
+            ride['room'],
+            ride['patient_name']
+        )
+    )
+
+    return id
 
 
-async def main():
-    async with serve(router, "localhost", 8765):
-        await asyncio.Future()  # run forever
+@app.route("/")
+def new_session2():
+    return "<p>Hello, World!</p>"
 
 
-asyncio.run(main())
+@sock.route('/smartphone')
+def smartphone_ws(ws):
+    while True:
+        smartphone.order(ws, json.loads(ws.receive()))
 
+
+@sock.route('/lobby')
+def lobby_ws(ws):
+    while True:
+        lobby.tbd()
+
+
+@sock.route('/elevator')
+def elevator_ws(ws):
+    while True:
+        elevator.tbd()
