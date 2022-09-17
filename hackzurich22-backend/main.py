@@ -3,34 +3,27 @@ import json
 from flask import Flask
 from flask_cors import CORS
 from flask_sock import Sock
-from snowflake import SnowflakeGenerator
 
 import in_memory_storage
 from flask import request
 
-from service import smartphone, elevator, lobby
+import smartphone, elevator, lobby
 
 app = Flask(__name__)
 CORS(app)
 
 sock = Sock(app)
 
-global user_id
-user_id = 0
-
-
 
 @app.route("/ride/new", methods=['POST'])
 def new_session():
     ride = request.get_json()
-    user_id += 1
+    user_id = in_memory_storage.get_ride_id()
     in_memory_storage.elevators[0].rides.append(
         in_memory_storage.Ride(
             user_id,
             ride['from_floor'],
-            ride['to_floor'],
-            ride['room'],
-            ride['patient_name']
+            ride['to_floor']
         )
     )
 
@@ -53,4 +46,5 @@ def lobby_ws(ws):
 @sock.route('/elevator')
 def elevator_ws(ws):
     while True:
+        print('hello')
         elevator.open_ws(ws, ws.receive())

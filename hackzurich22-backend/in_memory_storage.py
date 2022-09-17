@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 
@@ -24,5 +25,16 @@ class Elevator:
     floor: int
     rides: List[Ride] = list()
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
+
 
 elevators: List[Elevator] = list()
+
+
+def get_ride_id():
+    x = 1
+    for elevator in elevators:
+        x += len(elevator.rides)
+    return x
