@@ -56,9 +56,9 @@ async def handler():
             # formatting used by the frontend is as yet to be defined.)
             for lift_id in KNOWN_LIFTS:
                 change_summary = {
-                    position: POSITION_TRACKER[lift_id],
-                    door: DOOR_STATUS_TRACKER[lift_id],
-                    movement: MOVEMENT_TRACKER[lift_id],
+                    "position": POSITION_TRACKER[lift_id],
+                    "door": DOOR_STATUS_TRACKER[lift_id],
+                    "movement": MOVEMENT_TRACKER[lift_id],
                 }
                 digest = json.dumps(change_summary)
 

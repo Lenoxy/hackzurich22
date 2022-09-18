@@ -1,3 +1,4 @@
+import asyncio
 import atexit
 import threading
 import json
@@ -40,7 +41,8 @@ def elevator_ws(ws):
 ## doors are open, etc. Makes use of the publish-subscribe API provided by Schindler
 
 def background_task():
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     result = loop.run_until_complete(status_tracker.handler())
 
 def shutdown_hook():
