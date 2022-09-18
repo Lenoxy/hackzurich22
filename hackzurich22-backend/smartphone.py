@@ -58,7 +58,6 @@ async def order(ws, order: OrderElevator):
     loop = asyncio.get_event_loop()
     assigned_lift = await loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
 
-    # elevator: Elevator = getAvailableElevator()
     elevator: Elevator = create_or_return_existing(ws, assigned_lift)
     elevator.rides.append(Ride(ws, order.customer_id, order.from_floor, order.to_floor))
     ws.send(json.dumps(type('obj', (object,),

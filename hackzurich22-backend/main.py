@@ -8,7 +8,6 @@ from flask_sock import Sock
 import elevator
 import in_memory_storage
 import smartphone
-from elevator import getAvailableElevator
 
 app = Flask(__name__)
 CORS(app)

@@ -13,15 +13,6 @@ def create_or_return_existing(ws, name: str):
         if elevator.name == name:
             return elevator
 
-    elevator = Elevator(ws, name, "idle", 0, [])
+    elevator = Elevator(ws, name, "stand-still", 0, [])
     elevators.append(elevator)
     return elevator
-
-
-def getAvailableElevator():
-    # todo implement
-    # for elevator in elevators:
-    #     if elevator.state == "waiting"
-    if len(elevators) == 0:
-        raise IndexError()
-    return elevators[0]
