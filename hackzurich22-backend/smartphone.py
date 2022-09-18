@@ -1,4 +1,3 @@
-from in_memory_storage import Elevator, Ride
 import asyncio
 import json
 import uuid
@@ -60,16 +59,14 @@ class OrderElevator:
 
 def order(ws, order: OrderElevator):
     print(order.customer_id + order.from_floor)
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     assigned_lift = loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
 
     elevator: Elevator = create_or_return_existing(ws, assigned_lift)
     elevator.rides.append(Ride(ws, order.customer_id, order.from_floor, order.to_floor))
-    ws.send(json.dumps(type('obj', (object,),
-                            {'name': elevator.name, 'arrival_timestamp': datetime.now()}
-                            )))
+    ws.send(json.dumps({'name': elevator.name, 'arrival_timestamp': str(datetime.now())}))
     # caution: we reworked the code to include the elevator logic from main.py
     # but we also deleted the second (seemingly unused elevator ride). Undo if needed.
     if elevator.websocket is not None:
-        if elevator.websocket.open:
-            elevator.websocket.send(elevator.toJSON())
+        elevator.websocket.send(elevator.toJSON())
