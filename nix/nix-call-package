@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ $# -ne 1 ]]; then
+  echo "error: exactly one parameter is needed (file to evaluate)" 2>&1
+  exit 1
+fi
+path="$(realpath "$1")"
+exec nix-build --expr "with import <nixpkgs> {}; pkgs.callPackage \"${path}\" {}"
