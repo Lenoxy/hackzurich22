@@ -29,7 +29,8 @@ def new_ride():
 @sock.route('/smartphone')
 def smartphone_ws(ws):
     while True:
-        smartphone.order(ws, json.loads(ws.receive()))
+        x = json.loads(ws.receive())
+        smartphone.order(ws, smartphone.OrderElevator(x['customer_id'], x['from_floor'], x['to_floor']))
 
 
 @sock.route('/elevator')

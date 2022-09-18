@@ -48,15 +48,20 @@ async def lift_call_handler(from_floor, to_floor):
 
 
 class OrderElevator:
+    def __init__(self, customer_id: int, from_floor: int, to_floor: int):
+        self.customer_id = customer_id
+        self.from_floor = from_floor
+        self.to_floor = to_floor
+
     customer_id: int
     from_floor: int
     to_floor: int
 
 
-async def order(ws, order: OrderElevator):
+def order(ws, order: OrderElevator):
     print(order.customer_id + order.from_floor)
     loop = asyncio.get_event_loop()
-    assigned_lift = await loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
+    assigned_lift = loop.run_until_complete(lift_call_handler(order.from_floor, order.to_floor))
 
     elevator: Elevator = create_or_return_existing(ws, assigned_lift)
     elevator.rides.append(Ride(ws, order.customer_id, order.from_floor, order.to_floor))
